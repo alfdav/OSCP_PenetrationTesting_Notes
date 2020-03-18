@@ -1,6 +1,6 @@
 Finding hosts
 
-#Capture arp req/rep packets
+############################################ Capture arp req/rep packets ############################################
 
 netdiscover -i tap0 -r 10.11.1.0/24
 
@@ -9,10 +9,7 @@ arp-scan -I tap0 10.11.1.1-10.11.1.2
 Arp requests of particular host
 tcpdump -nnti tap0 arp and host 10.11.1.2
 
-
-
-
-# Enumerating host names
+############################################ Enumerating host names ############################################
 nmap -p 53 -sT 10.11.1.0/24 --open
 
 add the dns server to /etc/resolv.conf
@@ -21,11 +18,11 @@ for ip in $(seq 1 254); do host 10.11.1.$ip; done | grep -v "not found"
 reveals all hostnames of the network range
 
 
-# DNS Zone transfer
+############################################ DNS Zone transfer ############################################
 host -l thinc.local 10.11.1.2
 
 
-####======= NMAP SCANNING
+############################################ NMAP SCANNING ############################################
 
 # Port scanning for "key services" (DNS, FTP, HTTP/HTTPS, NetBIOS, SMB SSH/rDesktop/VNC)
 nmap -p 21,22,53,80,137,138,139,443,445,3389,5900 -sT 10.11.1.0/24 --open
@@ -58,7 +55,7 @@ nmap -g 443 -p- 10.10.10.112
 
 
 
-ORTHER NMAP TIPS
+############################################ ORTHER NMAP TIPS ############################################
 Only Scanning machines which respond to a given Port: e.g. HTTPS-Webservers:
 # -PS <port>  -- invoking the '-PS 443' flag would treat hosts online if there is a response to attempt a connection on port 443. This is extraordinarily useful, and is one of the most valuable features in the Nmap host detection arsenal.
 (Many intrusion detection systems look for SYN scans)
@@ -67,16 +64,15 @@ Only Scanning machines which respond to a given Port: e.g. HTTPS-Webservers:
 # -sF         -- FIN scan
 ### CAUTION: FIN, Xmas, and NULL scans are known to not work against Microsoft Windows hosts.
 
-
-# Find appropriate nmap scripts
+############################################ Find appropriate nmap scripts ############################################
 e.g. ssh
 ls -lh /usr/share/nmap/scripts/*ssh*
 
-# Port knocking
+############################################ Port knocking############################################
 for x in 7 20 4; do nmap -Pn --host-sstimeout 201 --max-retries 0 -p $x 10.11.1.2; done
 
 
-# Banner grabbing
+############################################ Banner grabbing ############################################
 use netcat to connect to an open port to get information about the service and the target
 e.g. nc -nv 10.11.1.7 22
 or curl
@@ -93,7 +89,7 @@ or   curl -i -L 10.11.1.7
 
 
 
-##=== Web application enumeration
+############################################ Web application enumeration ############################################
 
 ##Using CURL
 
@@ -125,7 +121,7 @@ curl "http://10.11.1.1/shell.asp" -X PUT -T shell.asp
 # Overview WebDAV curl commands https://www.qed42.com/blog/using-curl-commands-webdav
 
 
-## Tools and wordlists for web directory brute forcing
+############################################ Tools and wordlists for web directory brute forcing ############################################
 # Wordlists:
 DirB - /usr/share/dirb/wordlists/
 DirBuster - /usr/share/wordlists/dirbuster/
@@ -163,7 +159,7 @@ nikto -host 10.11.1.7:443
 eg.: The form shows the string No account found with that username. when a username is not valid (FUZZ indicates the value being fuzzed):
 wfuzz -c -w /usr/share/seclists/Usernames/Names/names.txt -d "username=FUZZ&password=passwd" --hs "No account found with that username." http://10.10.10.97/login.php
 
-##=== FTP enumeration
+############################################ FTP enumeration ############################################
 
 # finding ftp servers with anonymous access
 nmap -v -p 21 --script=ftp-anon.nse 10.11.1.1-254
@@ -171,7 +167,7 @@ nmap -v -p 21 --script=ftp-anon.nse 10.11.1.1-254
 
 
 
-##=== SMB NetBios enumeration
+############################################ SMB NetBios enumeration ############################################
 
 nbtscan -r 10.11.1.0/24           //Network
 nbtscan -r 10.11.1.2             //Target
@@ -206,7 +202,7 @@ client min protocol = SMB2
 client max protocol = SMB3
 to /etc/samba/smb.conf
 
-##=== SNMP Enumerating
+############################################ SNMP Enumerating ############################################
 
 # Community String bruteforce
 onesixtyone -c /usr/share/doc/onesixtyone/dict.txt 10.11.1.1
@@ -216,8 +212,7 @@ snmpenum 10.11.1.2 public /usr/share/snmpenum/linux.txt
 
 
 
-
-##=== ARP requests & pings to a particular host
+############################################ ARP requests & pings to a particular host ############################################
 
 tcpdump -nnti tap0 arp and host 10.11.1.2
 
@@ -237,7 +232,7 @@ searchsploit apache cgi | grep -v "/dos/"
 searchsploit --colour -t php 5.x | grep -v '/dos/' | grep -vi '\.php'
 searchsploit --colour -t php 5 | grep -vi '/dos/\|\.php[^$]' | grep -i '5\.\(5\|x\)' | grep -vi '/windows/\|PHP-Nuke\|RapidKill Pro\|Gift Registry\|Artiphp CMS'
 
-##=== Vulnerablity scanning
+############################################ Vulnerablity scanning ############################################
 
 #searching for shellshock according to elaborated cgi - paths
 nmap 10.11.1.7 -p 80 --script=http-shellshock --script-args uri=/cgi-bin/test.cgi --script-args uri=/cgi-bin/admin.cgi
@@ -253,7 +248,7 @@ for x in 70 80 90; do nmap -Pn --host_timeout 201 --max-retries 0 -p $x 10.10.10
 
 
 
-### GETTING a shell
+############################################ GETTING a shell ############################################
 #Reverse shell cheat sheet
 http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
 
@@ -261,7 +256,7 @@ http://pentestmonkey.net/cheat-sheet/shells/reverse-shell-cheat-sheet
 
 
 
-### USING PROXY chains
+############################################ USING PROXY chains ############################################
 
 
 proxychains nikto -host 10.1.1.254:30080 2> /dev/null
