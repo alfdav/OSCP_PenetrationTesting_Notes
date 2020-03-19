@@ -83,9 +83,9 @@ or   curl -i -L 10.11.1.7
 #I personally find this to be much quicker than nmap (in general), but it doesn't have nmap's powerful scripting engine. One of the advantages of it is the options, control and power you have using it, but the down side to this, unicornscan is slightly more "confusing" to use.
 #A student of ours, superkojiman, has made a wrapper (onetwopunch - https://github.com/superkojiman/onetwopunch) which merges the advantages of unicornscan's speed and nmap's scripts. However, this can be something you research in your own time .
 
+############################################ smtp/pop3 ############################################
 
-
-
+https://forums.offensive-security.com/showthread.php?27951-Offensive-Security-Complete-Guide-to-Beta/page2
 
 
 
