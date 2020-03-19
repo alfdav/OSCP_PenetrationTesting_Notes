@@ -4,6 +4,8 @@
 
 !!==== Operating SYSTEM
 
+lsb_release -a
+
 ##=== Scripted approach
 using LinEnum.sh
 from /opt/LinEnum
